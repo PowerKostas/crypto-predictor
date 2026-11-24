@@ -1,2 +1,2 @@
-# crypto-price-prediction
+# crypto-predictor
 The program takes cryptocurrency ticker names as input and uses historical data to predict their highest/closing price tomorrow. Additionally, the biggest "opportunities" of the day can be found through analyzing the top 100 cryptos by market cap. All the saved models are stored in the Coins folder. The data_analysed.csv file archives the data of each crypto's last search, the model continues from that point on. Outdated scraping methods are used. Made in April 2023

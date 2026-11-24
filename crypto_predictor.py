@@ -52,8 +52,8 @@ while True:
         print('\nCrypto',str(i+1)+'/'+str(len(crypto_names)))
 
         # Finds if this crypto is in the database
-        already_analysed_crypto=pd.read_csv('C:/Users/Kostas/Desktop/Coding/Codes/Crypto Price Prediction/data_analysed.csv')
-        with open('C:/Users/Kostas/Desktop/Coding/Codes/Crypto Price Prediction/data_analysed.csv','r') as file:
+        already_analysed_crypto=pd.read_csv('data_analysed.csv')
+        with open('data_analysed.csv','r') as file:
             new_coin_flag=True
             pos=len(already_analysed_crypto)
             for j in range(len(already_analysed_crypto)):
@@ -127,7 +127,7 @@ while True:
             print('\nTraining the model...\n')
 
             if not new_coin_flag: # If its not a new coin, on the database, it loads the model that has been trained already, on the past data
-                model=load_model('C:/Users/Kostas/Desktop/Coding/Codes/Crypto Price Prediction/Coins/'+crypto_names[i])
+                model=load_model('Coins/'+crypto_names[i])
 
             model=Sequential()
 
@@ -138,7 +138,7 @@ while True:
 
             model.compile(optimizer='adam',loss='mean_squared_error')
             model.fit(x_train_2,y_train_2,epochs=70,batch_size=20)
-            model.save('C:/Users/Kostas/Desktop/Coding/Codes/Crypto Price Prediction/Coins/'+crypto_names[i])
+            model.save('Coins/'+crypto_names[i])
 
             # Testing the model
 
@@ -164,13 +164,13 @@ while True:
             
             date=datetime.now().strftime('%Y-%m-%d') # Format needed for the api
             if new_coin_flag: # If its a new coin it appends all the data
-                with open('C:/Users/Kostas/Desktop/Coding/Codes/Crypto Price Prediction/data_analysed.csv','a') as file:
+                with open('data_analysed.csv','a') as file:
                     file.write(crypto_names[i]+','+date+','+str(prediction_2[0][0])+','+str(prediction_1[0][0])+'\n')
             else: # Else it only updates the date and the last predictions
                 already_analysed_crypto.loc[pos,'Next_Date']=date 
                 already_analysed_crypto.loc[pos,'High_Prediction']=prediction_2[0][0]
                 already_analysed_crypto.loc[pos,'Close_Prediction']=prediction_1[0][0]
-                already_analysed_crypto.to_csv('C:/Users/Kostas/Desktop/Coding/Codes/Crypto Price Prediction/data_analysed.csv',index=False)
+                already_analysed_crypto.to_csv('data_analysed.csv',index=False)
         else:
             prediction_2=already_analysed_crypto.loc[pos,'High_Prediction']
             prediction_1=already_analysed_crypto.loc[pos,'Close_Prediction']
@@ -200,3 +200,4 @@ while True:
             if answer=='Q':
                 sys.exit()
             break
+        
